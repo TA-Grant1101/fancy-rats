@@ -1,2 +1,1 @@
-# brix
 # fancy-rats
