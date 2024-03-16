@@ -12,7 +12,7 @@ public class Job {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     private int zipCode;
 
