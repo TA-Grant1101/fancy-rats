@@ -16,7 +16,8 @@ public class Job {
     private String animal;
 
 
-    //Constructor
+    //Constructors
+    public Job(){};
     public Job(String username, String animal){
         this.username = username;
         this.animal = animal;
