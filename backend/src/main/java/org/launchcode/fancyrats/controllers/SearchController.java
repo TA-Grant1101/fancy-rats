@@ -21,6 +21,7 @@ public class SearchController {
     public List<Job> getJobList(@RequestParam(required = false) Integer id){
         List<Job> returnedJobList = new ArrayList<>();
 
+
         if (id == null){return jobRepository.findAll();}
         else{
             Optional<Job> optionalJob= jobRepository.findById(id);
