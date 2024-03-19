@@ -1,32 +1,16 @@
-import {Component} from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Search from "./pages/Search";
+import Home from "./pages/Home";
 
-class App extends Component {
-  state = {
-    clients: []
-  };
-
-  async componentDidMount() {
-    const response = await fetch('/clients');
-    const body = await response.json();
-    this.setState({clients: body});
-  }
-
-  render() {
-    const {clients} = this.state;
-    return (
-        <div className="App">
-          <header className="App-header">
-            <div className="App-intro">
-              <h2>Clients</h2>
-              {clients.map(client =>
-                  <div key={client.id}>
-                    {client.name} ({client.email})
-                  </div>
-              )}
-            </div>
-          </header>
-        </div>
-    );
-  }
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/search/:id" element={<Search />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-export default App;
