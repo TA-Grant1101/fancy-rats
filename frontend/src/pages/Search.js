@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
 const JobList = () => {
-    const [jobs, getJobList] = useState([]);
+    const [jobs, setJobList] = useState([]);
 
     useEffect(() => {
-        fetch('/search')
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data received from server:', data); // Add this line for logging
-                getJobList(data);
-            })
-            .catch(error => console.error('Error fetching jobs:', error)); // Updated error message
+        fetch('/search?id=1')
+        .then(response => response.json())
+        .then(data => {setJobList(data);});
     }, []);
+
+    console.log(jobs);
 
     return (
         <div>
             <h1>List of Jobs</h1>
-            <ul>
-                {jobs.map(job => (
-                    <li key={job.id}>{job.username}</li>
-                ))}
-            </ul>
+            <table>
+                <tbody>
+                    {jobs.map(job => (
+                        <tr key={job.id}>
+                            <td>{job.id}</td>
+                            <td>{job.username}</td>
+                            <td>{job.animal}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
