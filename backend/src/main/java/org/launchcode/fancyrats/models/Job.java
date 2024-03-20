@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -14,13 +15,17 @@ public class Job {
     @GeneratedValue
     private Integer id;
 
-    private int zipCode;
+    @NotNull(message = "Zip code required")
+    private Integer zipCode;
 
+    @NotNull(message = "Start date required")
+    @FutureOrPresent(message = "Format YYYY-MM-DD")
     private LocalDate startDate;
 
+    @NotNull(message = "End date required")
+    @FutureOrPresent(message = "Format YYYY-MM-DD")
     private LocalDate endDate;
 
-    //final?
     private LocalDate createdDate;
 
     private long payRate;

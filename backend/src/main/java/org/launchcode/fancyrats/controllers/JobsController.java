@@ -1,5 +1,6 @@
 package org.launchcode.fancyrats.controllers;
 
+import jakarta.validation.Valid;
 import org.launchcode.fancyrats.models.Job;
 import org.launchcode.fancyrats.models.data.JobRepository;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class JobsController {
     }
 
     @GetMapping
-    public List<Job> getClients() {
+    public List<Job> getJobs() {
         return jobRepository.findAll();
     }
 
@@ -31,7 +32,7 @@ public class JobsController {
     }
 
     @PostMapping
-    public ResponseEntity createJob(@RequestBody Job job) throws URISyntaxException {
+    public ResponseEntity<Job> createJob(@Valid @RequestBody Job job) throws URISyntaxException {
         //TODO: Validate job object before save
         job.setCreatedDate(LocalDate.now());
         Job savedJob = jobRepository.save(job);
@@ -39,7 +40,7 @@ public class JobsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateJob(@PathVariable Integer id, @RequestBody Job job) {
+    public ResponseEntity<Job> updateJob(@PathVariable Integer id, @Valid @RequestBody Job job) {
         Job currentJob = jobRepository.findById(id).orElseThrow(RuntimeException::new);
         currentJob.setDescription(job.getDescription());
         currentJob.setZipCode(job.getZipCode());
@@ -52,7 +53,7 @@ public class JobsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteJob(@PathVariable Integer id) {
+    public ResponseEntity<Job> deleteJob(@PathVariable Integer id) {
         jobRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
