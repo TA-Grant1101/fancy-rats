@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -59,7 +60,7 @@ public class JobTest {
     }
 
     @Test
-    void givenProjectCreated_whenDelete_thenSuccess() {
+    void givenJobCreated_whenDelete_thenSuccess() {
         Job job = new Job(
                 63108,
                 LocalDate.of(2024, 3,15),
@@ -71,6 +72,21 @@ public class JobTest {
         entityManager.persist(job);
         jobRepository.delete(job);
         assertThat(entityManager.find(Job.class, job.getId())).isNull();
+    }
+
+    @Test
+    void givenJobCreated_whenFindById_returnsJob() {
+        Job job = new Job(
+                63108,
+                LocalDate.of(2024, 3,15),
+                LocalDate.of(2024, 3, 20),
+                LocalDate.now(), 18L,
+                "Job Test",
+                new Client()
+        );
+        entityManager.persist(job);
+        Optional<Job> retrivedJob = jobRepository.findById(job.getId());
+        assertThat(retrivedJob).contains(job);
     }
 
 }
