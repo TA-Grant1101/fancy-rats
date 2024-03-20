@@ -3,41 +3,59 @@ import React, { useState, useEffect } from 'react';
 const JobList = () => {
     const [jobs, setJobList] = useState([]);
     const [id, setId] = useState('');
+    const [animal, setAnimal] = useState('');
 
     useEffect(() => {
-        fetch(`/search`)
+        fetch(`/searchAll`)
         .then(response => response.json())
         .then(data => {setJobList(data);})
         .catch(error => console.error('Error fetching data:', error));
     }, [id]);
 
-    const findById = (idNumber) =>{
-        fetch(`/search?id=${idNumber}`)
+    
+    const findByAnimal = (animalName) =>{
+        fetch(`/searchBySomething?animal=${animalName}`)
             .then(response => response.json())
             .then(data => {setJobList(data);})
             .catch(error => console.error('Error fetching data:', error));
     };
 
-    const handleInputChange = (event) => {
-        setId(event.target.value);
+
+    const findById = (idNumber) =>{
+        fetch(`/searchBySomething?id=${idNumber}`)
+            .then(response => response.json())
+            .then(data => {setJobList(data);})
+            .catch(error => console.error('Error fetching data:', error));
     };
+
+    const handleInputChangeID = (event) => {setId(event.target.value);};
+    const handleInputChangeAnimal = (event) => {setAnimal(event.target.value);};
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (id) {findById(id);}
+        if (animal) {findByAnimal(animal);}
     };
-
     return (
         <div>
             <h1>List of Jobs</h1>
             <form onSubmit={handleSubmit}>
-                <label>Search By Id<br></br></label>
+                <label>ID: </label>
                 <input 
                     type="text" 
                     name="id" 
                     value={id} 
-                    onChange={handleInputChange} 
+                    onChange={handleInputChangeID} 
                     placeholder="Enter ID"/>
+
+                <label><br></br>Animal: </label>
+                <input 
+                    type="text" 
+                    name="animal" 
+                    value={animal} 
+                    onChange={handleInputChangeAnimal} 
+                    placeholder="Enter Animal Species"/>
+
                 <button type="submit">Submit</button>
             </form>
             <table>
