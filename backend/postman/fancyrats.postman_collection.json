@@ -137,7 +137,35 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"zipCode\": 63130,\n    \"startDate\": \"2024-03-10\",\n    \"endDate\": \"2024-03-20\",\n    \"payRate\": 20.00,\n    \"description\": \"Watch my dog\"\n}",
+							"raw": "{\n    \"zipCode\": 63108,\n    \"startDate\": \"2025-03-10\",\n    \"endDate\": \"2025-03-20\",\n    \"payRate\": 20.00,\n    \"totalHours\": 6,\n    \"description\": \"Please watch my dog\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create job error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"zipCode\": 63108,\n    \"startDate\": \"2023-11-22\",\n    \"endDate\": \"2023-11-24\",\n    \"payRate\": 20.00,\n    \"totalHours\": 6,\n    \"description\": \"Watch my dog\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -184,7 +212,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"zipCode\": 63130,\n    \"startDate\": \"2024-03-10\",\n    \"endDate\": \"2024-03-20\",\n    \"payRate\": 20.00,\n    \"description\": \"Update my dog.\"\n}",
+							"raw": "{\n    \"zipCode\": 63130,\n    \"startDate\": \"2025-03-10\",\n    \"endDate\": \"2025-03-20\",\n    \"payRate\": 20.00,\n    \"totalHours\": 6,\n    \"description\": \"Update my dog.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
