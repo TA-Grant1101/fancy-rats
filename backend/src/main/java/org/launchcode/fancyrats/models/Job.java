@@ -28,38 +28,43 @@ public class Job {
 
     private LocalDate createdDate;
 
-    private long payRate;
+    private double payRate;
+
+    private double totalHours;
 
     private String description;
 
     @ManyToOne
     private Client client;
 
-    //TODO: Replace Client with User once User class is created;
+    //TODO: Replace Client with User once User class is merged;
 
     //TODO: Add ManyToMany Pet field once Pet class is created;
 
-    public Job(int zipCode, LocalDate startDate, LocalDate endDate, LocalDate createdDate, long payRate, String description, Client client) {
+    //TODO: Reorder fields to match form response body
+
+    public Job(Integer zipCode, LocalDate startDate, LocalDate endDate, LocalDate createdDate, double payRate, double totalHours, String description, Client client) {
         this.zipCode = zipCode;
         this.startDate = startDate;
         this.endDate = endDate;
         this.createdDate = createdDate;
         this.payRate = payRate;
+        this.totalHours = totalHours;
         this.description = description;
         this.client = client;
     }
 
     public Job() {}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public int getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -87,12 +92,20 @@ public class Job {
         this.createdDate = createdDate;
     }
 
-    public long getPayRate() {
+    public double getPayRate() {
         return payRate;
     }
 
-    public void setPayRate(long payRate) {
+    public void setPayRate(double payRate) {
         this.payRate = payRate;
+    }
+
+    public double getTotalHours() {
+        return totalHours;
+    }
+
+    public void setTotalHours(double totalHours) {
+        this.totalHours = totalHours;
     }
 
     public String getDescription() {

@@ -33,7 +33,7 @@ public class JobTest {
                 63108,
                 LocalDate.of(2024, 3,15),
                 LocalDate.of(2024, 3, 20),
-                LocalDate.now(), 18L,
+                LocalDate.now(), 18, 5,
                 "Job Test",
                 new Client()
         );
@@ -47,7 +47,7 @@ public class JobTest {
                 63108,
                 LocalDate.of(2024, 3,15),
                 LocalDate.of(2024, 3, 20),
-                LocalDate.now(), 18L,
+                LocalDate.now(), 18, 5,
                 "Job Test",
                 new Client()
         );
@@ -65,7 +65,7 @@ public class JobTest {
                 63108,
                 LocalDate.of(2024, 3,15),
                 LocalDate.of(2024, 3, 20),
-                LocalDate.now(), 18L,
+                LocalDate.now(), 18, 5,
                 "Job Test",
                 new Client()
         );
@@ -80,7 +80,7 @@ public class JobTest {
                 63108,
                 LocalDate.of(2024, 3,15),
                 LocalDate.of(2024, 3, 20),
-                LocalDate.now(), 18L,
+                LocalDate.now(), 18, 5,
                 "Job Test",
                 new Client()
         );

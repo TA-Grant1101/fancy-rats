@@ -45,6 +45,7 @@ public class JobsController {
         currentJob.setDescription(job.getDescription());
         currentJob.setZipCode(job.getZipCode());
         currentJob.setPayRate(job.getPayRate());
+        currentJob.setTotalHours(job.getTotalHours());
         currentJob.setStartDate(job.getStartDate());
         currentJob.setEndDate(job.getEndDate());
         currentJob = jobRepository.save(currentJob);
