@@ -3,8 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
-    id 'java-library'
-    id 'maven-publish'
 }
 
 configurations {
@@ -32,7 +30,6 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
     compileOnly 'org.projectlombok:lombok'
-    compileOnly 'org.apache.tomcat.embed:tomcat-embed-websocket'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

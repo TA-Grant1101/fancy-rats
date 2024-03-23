@@ -35,15 +35,13 @@ public class Job {
     private String description;
 
     @ManyToOne
-    private Client client;
-
-    //TODO: Replace Client with User once User class is merged;
+    private User user;
 
     //TODO: Add ManyToMany Pet field once Pet class is created;
 
     //TODO: Reorder fields to match form response body
 
-    public Job(Integer zipCode, LocalDate startDate, LocalDate endDate, LocalDate createdDate, double payRate, double totalHours, String description, Client client) {
+    public Job(Integer zipCode, LocalDate startDate, LocalDate endDate, LocalDate createdDate, double payRate, double totalHours, String description, User user) {
         this.zipCode = zipCode;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -51,7 +49,7 @@ public class Job {
         this.payRate = payRate;
         this.totalHours = totalHours;
         this.description = description;
-        this.client = client;
+        this.user = user;
     }
 
     public Job() {}
@@ -116,11 +114,11 @@ public class Job {
         this.description = description;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

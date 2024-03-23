@@ -3,7 +3,12 @@ package org.launchcode.fancyrats.controllers;
 import jakarta.validation.Valid;
 import org.launchcode.fancyrats.models.Job;
 import org.launchcode.fancyrats.models.data.JobRepository;
+import org.launchcode.fancyrats.models.data.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -12,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/jobs")
+@RequestMapping("/api/jobs")
 public class JobsController {
 
     private final JobRepository jobRepository;
@@ -34,6 +39,7 @@ public class JobsController {
     @PostMapping
     public ResponseEntity<Job> createJob(@Valid @RequestBody Job job) throws URISyntaxException {
         //TODO: Validate job object before save
+        // job.setUser()
         job.setCreatedDate(LocalDate.now());
         Job savedJob = jobRepository.save(job);
         return ResponseEntity.created(new URI("/jobs/" + savedJob.getId())).body(savedJob);
@@ -59,4 +65,13 @@ public class JobsController {
         return ResponseEntity.ok().build();
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public List<FieldError> validationError(MethodArgumentNotValidException ex) {
+        BindingResult result = ex.getBindingResult();
+        final List<FieldError> fieldErrors = result.getFieldErrors();
+
+        return fieldErrors;
+    }
 }
