@@ -2,10 +2,13 @@ package org.launchcode.fancyrats.controllers;
 
 import jakarta.validation.Valid;
 import org.launchcode.fancyrats.models.Job;
+import org.launchcode.fancyrats.models.User;
 import org.launchcode.fancyrats.models.data.JobRepository;
 import org.launchcode.fancyrats.models.data.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -22,8 +26,14 @@ public class JobsController {
 
     private final JobRepository jobRepository;
 
-    public JobsController(JobRepository jobRepository) {
+    private UserRepository userRepository;
+
+    public JobsController(
+            JobRepository jobRepository,
+            UserRepository userRepository
+    ) {
         this.jobRepository = jobRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -37,9 +47,16 @@ public class JobsController {
     }
 
     @PostMapping
-    public ResponseEntity<Job> createJob(@Valid @RequestBody Job job) throws URISyntaxException {
+    public ResponseEntity<Job> createJob(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody Job job
+    ) throws URISyntaxException {
+        Optional<User> userResult = userRepository.findByUsername(userDetails.getUsername());
+        if(userResult.isPresent()) {
+            User user = userResult.get();
+            job.setUser(user);
+        }
         //TODO: Validate job object before save
-        // job.setUser()
         job.setCreatedDate(LocalDate.now());
         Job savedJob = jobRepository.save(job);
         return ResponseEntity.created(new URI("/jobs/" + savedJob.getId())).body(savedJob);
