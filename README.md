@@ -1,6 +1,6 @@
 ## React Hooks: JWT Authentication (without Redux) example
 
-For more detail, please visit:
+For more detail, please visit: 
 > [React Hooks: JWT Authentication & Authorization (without Redux) example](https://bezkoder.com/react-hooks-jwt-auth/)
 
 > [React Redux Login, Logout, Registration example with Hooks](https://bezkoder.com/react-hooks-redux-login-registration-example/)
