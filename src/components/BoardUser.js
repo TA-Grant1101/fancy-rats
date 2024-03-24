@@ -37,4 +37,4 @@ const BoardUser = () => {
   );
 };
 
-export default BoardUser;
+export default BoardUser; 

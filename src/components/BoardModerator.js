@@ -4,7 +4,7 @@ import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
 
 const BoardModerator = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(""); 
 
   useEffect(() => {
     UserService.getModeratorBoard().then(

@@ -37,4 +37,4 @@ const BoardAdmin = () => {
   );
 };
 
-export default BoardAdmin;
+export default BoardAdmin; 
