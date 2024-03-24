@@ -16,22 +16,29 @@ public class Job {
     private Integer id;
 
     @NotNull(message = "Zip code required")
+    @Pattern(regexp = "/^\\d{5}$/", message = "Zip Code must be 5 digits")
+    @Positive(message = "Zip Code must be a positive number")
     private Integer zipCode;
 
     @NotNull(message = "Start date required")
-    @FutureOrPresent(message = "Format YYYY-MM-DD")
+    @FutureOrPresent(message = "Start date must be in the future")
     private LocalDate startDate;
 
     @NotNull(message = "End date required")
-    @FutureOrPresent(message = "Format YYYY-MM-DD")
+    @FutureOrPresent(message = "End date must be in the future")
     private LocalDate endDate;
 
     private LocalDate createdDate;
 
+    @NotNull(message = "Pay rate required")
+    @Positive(message = "Pay rate must be greater than zero")
     private double payRate;
 
+    @NotNull(message = "Number of hours required")
+    @Positive(message = "Number of hours must be greater than zero")
     private double totalHours;
 
+    @NotNull(message = "Description required")
     private String description;
 
     @ManyToOne
