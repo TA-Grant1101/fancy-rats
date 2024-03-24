@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField }  from '@mui/material';
+import { Button, TextField, Container, Grid }  from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import EventBus from "../common/EventBus";
@@ -94,66 +94,90 @@ export default function CreateJob() {
 
     return (
         <div className="container">
-            <header className="jumbotron">
+            <Container maxWidth="md">
+                <header className="jumbotron">
+                    <h3>Create Job Posting</h3>
+                </header>
+            </Container>
+            <Container maxWidth="md" >
+                <form  onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                label="Zip Code"
+                                variant="outlined"
+                                fullWidth
+                                name="zipCode"
+                                value={formData.zipCode}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                label="Description"
+                                variant="outlined"
+                                fullWidth
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                label="Number of Hours"
+                                variant="outlined"
+                                fullWidth
+                                name="totalHours"
+                                value={formData.totalHours}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                label="Pay Rate"
+                                variant="outlined"
+                                fullWidth
+                                name="payRate"
+                                value={formData.payRate}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <DatePicker
+                                name="startDate"
+                                value={formData.startDate}
+                                onChange={handleStartDateChange}
+                                label="Start Date"
+                                disablePast
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <DatePicker
+                                name="endDate"
+                                value={formData.endDate}
+                                onChange={handleEndDateChange}
+                                label="End Date"
+                                minDate={formData.startDate}
+                                disablePast
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button type="submit" variant="contained" color="primary">
+                                Submit
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Container>
+            <div>
                 <pre>{content}</pre>
-            </header>
-            <form  onSubmit={handleSubmit}>
-                <TextField
-                    label="Zip Code"
-                    variant="outlined"
-                    fullWidth
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleChange}
-                    required
-                />
-                <TextField
-                    label="Pay Rate"
-                    variant="outlined"
-                    fullWidth
-                    name="payRate"
-                    value={formData.payRate}
-                    onChange={handleChange}
-                    required
-                />
-                <TextField
-                    label="Number of Hours"
-                    variant="outlined"
-                    fullWidth
-                    name="totalHours"
-                    value={formData.totalHours}
-                    onChange={handleChange}
-                    required
-                />
-                <TextField
-                    label="Description"
-                    variant="outlined"
-                    fullWidth
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                />
-                <DatePicker
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleStartDateChange}
-                    label="Start Date"
-                    disablePast
-                    required
-                />
-                <DatePicker
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={handleEndDateChange}
-                    label="End Date"
-                    disablePast
-                    required
-                />
-                <Button type="submit" variant="contained" color="primary">
-                    Submit
-                </Button>
-            </form>
+            </div>
         </div>
     );
 };
