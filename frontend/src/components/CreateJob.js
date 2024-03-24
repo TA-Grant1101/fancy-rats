@@ -17,9 +17,15 @@ export default function CreateJob() {
         totalHours: '',
         description: ''
     });
-    const [zipCodeError, setZipCodeError] = useState(false);
-    const [totalHoursError, setTotalHoursError] = useState(false);
-    const [payRateError, setPayRateError] = useState(false);
+    // const [zipCodeError, setZipCodeError] = useState(false);
+    // const [totalHoursError, setTotalHoursError] = useState(false);
+    // const [payRateError, setPayRateError] = useState(false);
+    const [errors, setErrors] = useState({
+        zipCodeError:false,
+        totalHoursError: false,
+        payRateError: false,
+    });
+    // const [emptyFields, setEmptyFields] = useState(true);
 
     useEffect( () => {
         async function fetchData() {
@@ -51,34 +57,39 @@ export default function CreateJob() {
         fetchData();
     }, []);
 
+    const noErrors = () => Object.values(errors).every((value) => (!value));
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // alert('Form data submitted: ' + formData)
-        const user = JSON.parse(localStorage.getItem('user'));
-        try {
-            const response = await fetch(API_URL + '/jobs', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + user.accessToken,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const json = await response.json()
-            setContent(JSON.stringify(json, ' ', 2));
-        } catch (error) {
-            const _content =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
+        if(noErrors) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            try {
+                const response = await fetch(API_URL + '/jobs', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + user.accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                const json = await response.json()
+                setContent(JSON.stringify(json, ' ', 2));
+            } catch (error) {
+                const _content =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-            setContent(_content);
+                setContent(_content);
 
-            if (error.response && error.response.status === 401) {
-                EventBus.dispatch("logout");
+                if (error.response && error.response.status === 401) {
+                    EventBus.dispatch("logout");
+                }
             }
+        } else {
+            setContent(JSON.stringify(errors));
         }
     }
 
@@ -112,12 +123,17 @@ export default function CreateJob() {
                                 fullWidth
                                 name="zipCode"
                                 value={formData.zipCode}
-                                error={zipCodeError}
-                                helperText={zipCodeError ? 'Invalid Zip Code' : ''}
+                                error={errors.zipCodeError}
+                                helperText={errors.zipCodeError ? 'Invalid Zip Code' : ''}
                                 onChange={(event) => {
                                     const zipcode = event.target.value;
-                                    setZipCodeError(isNaN(Number(zipcode)));
+                                    const regExZip = /^\d{5}$/;
+                                    setErrors({
+                                        ...errors,
+                                        zipCodeError: !regExZip.test(zipcode)
+                                    });
                                     setFormData({ ...formData, zipCode: zipcode });
+                                    // setEmptyFields(false);
                                 }}
                                 required
                             />
@@ -140,12 +156,16 @@ export default function CreateJob() {
                                 fullWidth
                                 name="totalHours"
                                 value={formData.totalHours}
-                                error={totalHoursError}
-                                helperText={totalHoursError ? 'Invalid number' : ''}
+                                error={errors.totalHoursError}
+                                helperText={errors.totalHoursError ? 'Invalid number' : ''}
                                 onChange={(event) => {
                                     const hours = event.target.value;
-                                    setTotalHoursError(isNaN(Number(hours)));
+                                    setErrors({
+                                        ...errors,
+                                        totalHoursError: isNaN(Number(hours)) || hours <= 0
+                                    });
                                     setFormData({ ...formData, totalHours: hours });
+                                    // setEmptyFields(false);
                                 }}
                                 required
                             />
@@ -157,12 +177,16 @@ export default function CreateJob() {
                                 fullWidth
                                 name="payRate"
                                 value={formData.payRate}
-                                error={payRateError}
-                                helperText={payRateError ? 'Invalid Pay Rate' : ''}
+                                error={errors.payRateError}
+                                helperText={errors.payRateError ? 'Invalid Pay Rate' : ''}
                                 onChange={(event) => {
                                     const pay = event.target.value;
-                                    setPayRateError(isNaN(Number(pay)));
+                                    setErrors({
+                                        ...errors,
+                                        payRateError: isNaN(Number(pay)) || pay <= 0
+                                    });
                                     setFormData({ ...formData, payRate: pay });
+                                    // setEmptyFields(false);
                                 }}
                                 required
                             />
@@ -189,7 +213,7 @@ export default function CreateJob() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button type="submit" variant="contained" color="primary">
+                            <Button type="submit" variant="contained" color="primary" disabled={!noErrors()}>
                                 Submit
                             </Button>
                         </Grid>
