@@ -17,6 +17,9 @@ export default function CreateJob() {
         totalHours: '',
         description: ''
     });
+    const [zipCodeError, setZipCodeError] = useState(false);
+    const [totalHoursError, setTotalHoursError] = useState(false);
+    const [payRateError, setPayRateError] = useState(false);
 
     useEffect( () => {
         async function fetchData() {
@@ -109,7 +112,13 @@ export default function CreateJob() {
                                 fullWidth
                                 name="zipCode"
                                 value={formData.zipCode}
-                                onChange={handleChange}
+                                error={zipCodeError}
+                                helperText={zipCodeError ? 'Invalid Zip Code' : ''}
+                                onChange={(event) => {
+                                    const zipcode = event.target.value;
+                                    setZipCodeError(isNaN(Number(zipcode)));
+                                    setFormData({ ...formData, zipCode: zipcode });
+                                }}
                                 required
                             />
                         </Grid>
@@ -131,7 +140,13 @@ export default function CreateJob() {
                                 fullWidth
                                 name="totalHours"
                                 value={formData.totalHours}
-                                onChange={handleChange}
+                                error={totalHoursError}
+                                helperText={totalHoursError ? 'Invalid number' : ''}
+                                onChange={(event) => {
+                                    const hours = event.target.value;
+                                    setTotalHoursError(isNaN(Number(hours)));
+                                    setFormData({ ...formData, totalHours: hours });
+                                }}
                                 required
                             />
                         </Grid>
@@ -142,7 +157,13 @@ export default function CreateJob() {
                                 fullWidth
                                 name="payRate"
                                 value={formData.payRate}
-                                onChange={handleChange}
+                                error={payRateError}
+                                helperText={payRateError ? 'Invalid Pay Rate' : ''}
+                                onChange={(event) => {
+                                    const pay = event.target.value;
+                                    setPayRateError(isNaN(Number(pay)));
+                                    setFormData({ ...formData, payRate: pay });
+                                }}
                                 required
                             />
                         </Grid>
