@@ -2,40 +2,41 @@ import React, { useState, useEffect } from 'react';
 
 const JobList = () => {
     const [jobs, setJobList] = useState([]);
+    const [jobData, setJobData] = useState([]);
     const [id, setId] = useState('');
     const [animal, setAnimal] = useState('');
+
 
     useEffect(() => {
         fetch(`/searchAll`)
         .then(response => response.json())
-        .then(data => {setJobList(data);})
+        .then(data => {
+            setJobData(data);
+            setJobList(data);})
         .catch(error => console.error('Error fetching data:', error));
-    }, [id]);
+    }, []);
 
-    
-    const findByAnimal = (animalName) =>{
-        fetch(`/searchBySomething?animal=${animalName}`)
-            .then(response => response.json())
-            .then(data => {setJobList(data);})
-            .catch(error => console.error('Error fetching data:', error));
-    };
-
-
-    const findById = (idNumber) =>{
-        fetch(`/searchBySomething?id=${idNumber}`)
-            .then(response => response.json())
-            .then(data => {setJobList(data);})
-            .catch(error => console.error('Error fetching data:', error));
-    };
 
     const handleInputChangeID = (event) => {setId(event.target.value);};
     const handleInputChangeAnimal = (event) => {setAnimal(event.target.value);};
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (id) {findById(id);}
-        if (animal) {findByAnimal(animal);}
-    };
+        const returnedJobList = [];
+        
+        if (id){
+            for (let i = 0; i < jobData.length; i++){
+                if(jobData[i].id == id){returnedJobList.push(jobData[i]);
+                }};}
+
+        if (animal){
+            for (let i = 0; i < jobData.length; i++){
+                if(jobData[i].animal === animal){returnedJobList.push(jobData[i]);
+                }};}
+
+        setJobList(returnedJobList);}
+
+
     return (
         <div>
             <h1>List of Jobs</h1>
