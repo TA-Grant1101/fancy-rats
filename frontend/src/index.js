@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Map from './components/Maps.js';
-import MapComponent from './components/MapComponent.js';
+
 import TestApp from './components/TestMapComponent';
-import { Marker } from '@react-google-maps/api';
-import AppMap from './components/Maps.js';
+
 import NavBar from './components/NavBarComponent.js';
 
 
@@ -17,11 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <NavBar/>
-    <App />
-    {/* <Map /> */}
-    {/* <MapComponent/> */}
+    <App />      
     <TestApp/>
-    {/* <AppMap/> */}
+    
     
    
     
