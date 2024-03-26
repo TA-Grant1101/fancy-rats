@@ -1,4 +1,5 @@
 import {Component} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
@@ -17,10 +18,10 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <div className="App-intro">
-              <h2>Clients</h2>
+              <h2>Let's Fetch A Friend</h2>
               {clients.map(client =>
                   <div key={client.id}>
-                    {client.name} ({client.email})
+                    {/* {client.name} ({client.email}) */}
                   </div>
               )}
             </div>
