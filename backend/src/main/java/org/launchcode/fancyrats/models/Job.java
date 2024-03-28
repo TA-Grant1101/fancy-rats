@@ -16,7 +16,8 @@ public class Job {
     private Integer id;
 
     @NotNull(message = "Zip code required")
-    @Pattern(regexp = "/^\\d{5}$/", message = "Zip Code must be 5 digits")
+    @Digits(integer = 5, fraction = 0, message = "Zip Code must be 5 digits")
+    @Min(value = 10000, message = "Zip Code must be 5 digits")
     @Positive(message = "Zip Code must be a positive number")
     private Integer zipCode;
 
