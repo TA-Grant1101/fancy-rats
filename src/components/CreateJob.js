@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Container, Grid }  from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -17,45 +18,13 @@ export default function CreateJob() {
         totalHours: '',
         description: ''
     });
-    // const [zipCodeError, setZipCodeError] = useState(false);
-    // const [totalHoursError, setTotalHoursError] = useState(false);
-    // const [payRateError, setPayRateError] = useState(false);
+    const navigate = useNavigate();
+
     const [errors, setErrors] = useState({
         zipCodeError:false,
         totalHoursError: false,
         payRateError: false,
     });
-    // const [emptyFields, setEmptyFields] = useState(true);
-
-    useEffect( () => {
-        async function fetchData() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            try {
-                const response = await fetch(API_URL + '/jobs', {
-                    headers: {
-                        'Authorization': 'Bearer ' + user.accessToken,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const json = await response.json()
-                setContent(JSON.stringify(json, ' ', 2));
-            } catch (error) {
-                const _content =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                setContent(_content);
-
-                if (error.response && error.response.status === 401) {
-                    EventBus.dispatch("logout");
-                }
-            }
-        }
-        fetchData();
-    }, []);
 
     const noErrors = () => Object.values(errors).every((value) => (!value));
 
@@ -64,7 +33,7 @@ export default function CreateJob() {
         if(noErrors) {
             const user = JSON.parse(localStorage.getItem('user'));
             try {
-                const response = await fetch(API_URL + '/jobs', {
+                const response = await fetch(API_URL + '/jobs/add', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + user.accessToken,
@@ -73,6 +42,7 @@ export default function CreateJob() {
                     body: JSON.stringify(formData)
                 });
                 const json = await response.json()
+                navigate('/jobs')
                 setContent(JSON.stringify(json, ' ', 2));
             } catch (error) {
                 const _content =
