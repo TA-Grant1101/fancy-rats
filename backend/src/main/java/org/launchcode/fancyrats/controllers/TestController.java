@@ -1,15 +1,27 @@
 package org.launchcode.fancyrats.controllers;
 
+import org.launchcode.fancyrats.models.Job;
+import org.launchcode.fancyrats.models.data.JobRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
+    private final JobRepository jobRepository;
+
+    public TestController(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
+
     @GetMapping("/all")
     public String allAccess() {
         return "Public Content.";
@@ -17,8 +29,8 @@ public class TestController {
 
     @GetMapping("/user")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
+    public String userAccess(@AuthenticationPrincipal UserDetails userDetails) {
+        return "User Content." + userDetails.getUsername();
     }
 
     @GetMapping("/mod")
@@ -29,7 +41,8 @@ public class TestController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
+    public List<Job> adminAccess() {
+        return jobRepository.findAll();
+//        return "Admin Board.";
     }
 }
