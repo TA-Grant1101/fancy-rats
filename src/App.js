@@ -8,6 +8,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
+import Search from "./components/Search";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
@@ -60,6 +61,11 @@ const App = () => {
             <li className="nav-item">
               <Link to={"/home"} className="nav-link">
                 Home
+              </Link>
+            </li>
+            <li className="navbar-nav mr-auto">
+              <Link to={"/search"} className="nav-link">
+                Search
               </Link>
             </li>
 
@@ -129,6 +135,7 @@ const App = () => {
             <Route path="/mod" element={<BoardModerator/>} />
             <Route path="/admin" element={<BoardAdmin/>} />
             <Route path="/jobs" element={<CreateJob/>} />
+            <Route path="/search" element={<Search/>} />
           </Routes>
         </div>
 
