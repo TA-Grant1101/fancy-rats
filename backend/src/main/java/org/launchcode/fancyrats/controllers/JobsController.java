@@ -46,7 +46,7 @@ public class JobsController {
         return jobRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Job> createJob(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody Job job
